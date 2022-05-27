@@ -1,0 +1,22 @@
+{
+  "apps": [
+    {
+      "name": "SeedBox_Backend",
+      "script": "node server.js",
+      "cwd": "",
+      "watch": false
+    },
+    {
+      "name": "SeedBox_QueueListen",
+      "script": "adonis kue:listen",
+      "cwd": "",
+      "watch": false
+    },
+    {
+      "name": "SeedBox_Scheduler",
+      "script": "adonis scheduler",
+      "cwd": "",
+      "watch": false
+    }
+  ]
+}

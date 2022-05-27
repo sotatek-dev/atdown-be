@@ -1,0 +1,55 @@
+version: '3'
+services:
+  # The Backed Server
+  server:
+    build:
+      context: ./
+      dockerfile: local-server.dockerfile
+    ports:
+      - "3333:3333" 
+    volumes:
+      - backend-server:/app
+    links:
+      - kue
+      - redis
+      # - mysql
+
+  # The Kue
+  kue:
+    build:
+      context: ./
+      dockerfile: local-kue.dockerfile
+    ports:
+      - "3002:3001" 
+    volumes:
+      - backend-kue:/app
+    links:
+      - redis
+      # - mysql
+
+  # # Mysql Database
+  # mysql:
+  #   image: mysql:5.7
+  #   command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=Sotatek2021
+  #     - MYSQL_DATABASE=adonis
+  #     - MYSQL_USER=adonis
+  #     - MYSQL_PASSWORD=adonis#2021
+  #   volumes:
+  #     - backend-mysql:/var/lib/mysql
+  #   ports:
+  #     - "3306:3306"
+  #   restart: always
+
+   # Redis Database
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  backend-server:
+  backend-kue:
+  backend-mysql:
+  backend-redis:
